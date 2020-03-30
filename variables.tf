@@ -140,3 +140,11 @@ variable "groups_pachyderm" {
 variable "prometheus_grafana_password" {
   description = "Prometheus Operator password to access grafana"
 }
+
+variable "databricks_host" {
+  description = "The databricks host name"
+}
+
+variable "databricks_token" {
+  description = "The databricks token value"
+}

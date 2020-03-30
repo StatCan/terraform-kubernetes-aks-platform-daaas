@@ -40,3 +40,8 @@ groups_esd = []
 groups_pachyderm = []
 
 prometheus_grafana_password = ""
+
+# DataBricks Operator
+
+databricks_host = ""
+databricks_token = ""

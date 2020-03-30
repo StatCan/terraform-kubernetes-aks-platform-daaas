@@ -1,0 +1,2020 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  labels:
+    control-plane: controller-manager
+  name: azure-databricks-operator-system
+---
+apiVersion: apiextensions.k8s.io/v1beta1
+kind: CustomResourceDefinition
+metadata:
+  annotations:
+    controller-gen.kubebuilder.io/version: v0.2.4
+  creationTimestamp: null
+  name: dbfsblocks.databricks.microsoft.com
+spec:
+  additionalPrinterColumns:
+  - JSONPath: .metadata.creationTimestamp
+    name: Age
+    type: date
+  - JSONPath: .status.file_hash
+    name: SHA1SUM
+    type: string
+  - JSONPath: .status.file_info.path
+    name: Path
+    type: string
+  - JSONPath: .status.file_info.file_size
+    name: Size
+    type: integer
+  group: databricks.microsoft.com
+  names:
+    kind: DbfsBlock
+    listKind: DbfsBlockList
+    plural: dbfsblocks
+    singular: dbfsblock
+  scope: Namespaced
+  subresources: {}
+  validation:
+    openAPIV3Schema:
+      description: DbfsBlock is the Schema for the dbfsblocks API
+      properties:
+        apiVersion:
+          description: 'APIVersion defines the versioned schema of this representation
+            of an object. Servers should convert recognized schemas to the latest
+            internal value, and may reject unrecognized values. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources'
+          type: string
+        kind:
+          description: 'Kind is a string value representing the REST resource this
+            object represents. Servers may infer this from the endpoint the client
+            submits requests to. Cannot be updated. In CamelCase. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds'
+          type: string
+        metadata:
+          type: object
+        spec:
+          description: DbfsBlockSpec defines the desired state of DbfsBlock
+          properties:
+            data:
+              type: string
+            path:
+              type: string
+          type: object
+        status:
+          description: DbfsBlockStatus defines the observed state of DbfsBlock
+          properties:
+            file_hash:
+              type: string
+            file_info:
+              properties:
+                file_size:
+                  format: int64
+                  type: integer
+                is_dir:
+                  type: boolean
+                path:
+                  type: string
+              type: object
+          type: object
+      type: object
+  version: v1alpha1
+  versions:
+  - name: v1alpha1
+    served: true
+    storage: true
+status:
+  acceptedNames:
+    kind: ""
+    plural: ""
+  conditions: []
+  storedVersions: []
+---
+apiVersion: apiextensions.k8s.io/v1beta1
+kind: CustomResourceDefinition
+metadata:
+  annotations:
+    controller-gen.kubebuilder.io/version: v0.2.4
+  creationTimestamp: null
+  name: dclusters.databricks.microsoft.com
+spec:
+  additionalPrinterColumns:
+  - JSONPath: .metadata.creationTimestamp
+    name: Age
+    type: date
+  - JSONPath: .status.cluster_info.cluster_id
+    name: ClusterID
+    type: string
+  - JSONPath: .status.cluster_info.state
+    name: State
+    type: string
+  group: databricks.microsoft.com
+  names:
+    kind: Dcluster
+    listKind: DclusterList
+    plural: dclusters
+    singular: dcluster
+  scope: Namespaced
+  subresources: {}
+  validation:
+    openAPIV3Schema:
+      description: Dcluster is the Schema for the dclusters API
+      properties:
+        apiVersion:
+          description: 'APIVersion defines the versioned schema of this representation
+            of an object. Servers should convert recognized schemas to the latest
+            internal value, and may reject unrecognized values. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources'
+          type: string
+        kind:
+          description: 'Kind is a string value representing the REST resource this
+            object represents. Servers may infer this from the endpoint the client
+            submits requests to. Cannot be updated. In CamelCase. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds'
+          type: string
+        metadata:
+          type: object
+        spec:
+          properties:
+            autoscale:
+              properties:
+                max_workers:
+                  format: int32
+                  type: integer
+                min_workers:
+                  format: int32
+                  type: integer
+              type: object
+            autotermination_minutes:
+              format: int32
+              type: integer
+            cluster_log_conf:
+              properties:
+                dbfs:
+                  properties:
+                    destination:
+                      type: string
+                  type: object
+              type: object
+            cluster_name:
+              type: string
+            custom_tags:
+              items:
+                properties:
+                  key:
+                    type: string
+                  value:
+                    type: string
+                type: object
+              type: array
+            driver_node_type_id:
+              type: string
+            enable_elastic_disk:
+              type: boolean
+            init_scripts:
+              items:
+                properties:
+                  dbfs:
+                    properties:
+                      destination:
+                        type: string
+                    type: object
+                type: object
+              type: array
+            instance_pool_id:
+              type: string
+            node_type_id:
+              type: string
+            num_workers:
+              format: int32
+              type: integer
+            spark_conf:
+              additionalProperties:
+                type: string
+              type: object
+            spark_env_vars:
+              additionalProperties:
+                type: string
+              type: object
+            spark_version:
+              type: string
+          type: object
+        status:
+          description: DclusterStatus represents the status for a Dcluster
+          properties:
+            cluster_info:
+              description: DclusterInfo is similar to dbmodels.ClusterInfo, the reason
+                it exists is because dbmodels.ClusterInfo has a float field which
+                is not supported by Kubernetes API
+              properties:
+                autoscale:
+                  properties:
+                    max_workers:
+                      format: int32
+                      type: integer
+                    min_workers:
+                      format: int32
+                      type: integer
+                  type: object
+                autotermination_minutes:
+                  format: int32
+                  type: integer
+                cluster_cores:
+                  type: string
+                cluster_id:
+                  type: string
+                cluster_log_conf:
+                  properties:
+                    dbfs:
+                      properties:
+                        destination:
+                          type: string
+                      type: object
+                  type: object
+                cluster_log_status:
+                  properties:
+                    last_attempted:
+                      format: int64
+                      type: integer
+                    last_exception:
+                      type: string
+                  type: object
+                cluster_memory_mb:
+                  format: int64
+                  type: integer
+                cluster_name:
+                  type: string
+                creator_user_name:
+                  type: string
+                default_tags:
+                  additionalProperties:
+                    type: string
+                  type: object
+                driver:
+                  properties:
+                    host_private_ip:
+                      type: string
+                    instance_id:
+                      type: string
+                    node_id:
+                      type: string
+                    private_ip:
+                      type: string
+                    public_dns:
+                      type: string
+                    start_timestamp:
+                      format: int64
+                      type: integer
+                  type: object
+                driver_node_type_id:
+                  type: string
+                executors:
+                  items:
+                    properties:
+                      host_private_ip:
+                        type: string
+                      instance_id:
+                        type: string
+                      node_id:
+                        type: string
+                      private_ip:
+                        type: string
+                      public_dns:
+                        type: string
+                      start_timestamp:
+                        format: int64
+                        type: integer
+                    type: object
+                  type: array
+                init_scripts:
+                  items:
+                    properties:
+                      dbfs:
+                        properties:
+                          destination:
+                            type: string
+                        type: object
+                    type: object
+                  type: array
+                jdbc_port:
+                  format: int32
+                  type: integer
+                last_activity_time:
+                  format: int64
+                  type: integer
+                last_state_loss_time:
+                  format: int64
+                  type: integer
+                node_type_id:
+                  type: string
+                num_workers:
+                  format: int32
+                  type: integer
+                spark_conf:
+                  properties:
+                    key:
+                      type: string
+                    value:
+                      type: string
+                  type: object
+                spark_context_id:
+                  format: int64
+                  type: integer
+                spark_env_vars:
+                  additionalProperties:
+                    type: string
+                  type: object
+                spark_version:
+                  type: string
+                start_time:
+                  format: int64
+                  type: integer
+                state:
+                  type: string
+                state_message:
+                  type: string
+                terminate_time:
+                  format: int64
+                  type: integer
+                termination_reason:
+                  properties:
+                    code:
+                      type: string
+                    parameters:
+                      items:
+                        properties:
+                          key:
+                            type: string
+                          value:
+                            type: string
+                        type: object
+                      type: array
+                  type: object
+              type: object
+          type: object
+      type: object
+  version: v1alpha1
+  versions:
+  - name: v1alpha1
+    served: true
+    storage: true
+status:
+  acceptedNames:
+    kind: ""
+    plural: ""
+  conditions: []
+  storedVersions: []
+---
+apiVersion: apiextensions.k8s.io/v1beta1
+kind: CustomResourceDefinition
+metadata:
+  annotations:
+    controller-gen.kubebuilder.io/version: v0.2.4
+  creationTimestamp: null
+  name: djobs.databricks.microsoft.com
+spec:
+  additionalPrinterColumns:
+  - JSONPath: .metadata.creationTimestamp
+    name: Age
+    type: date
+  - JSONPath: .status.job_status.job_id
+    name: JobID
+    type: integer
+  group: databricks.microsoft.com
+  names:
+    kind: Djob
+    listKind: DjobList
+    plural: djobs
+    singular: djob
+  scope: Namespaced
+  subresources: {}
+  validation:
+    openAPIV3Schema:
+      description: Djob is the Schema for the djobs API
+      properties:
+        apiVersion:
+          description: 'APIVersion defines the versioned schema of this representation
+            of an object. Servers should convert recognized schemas to the latest
+            internal value, and may reject unrecognized values. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources'
+          type: string
+        kind:
+          description: 'Kind is a string value representing the REST resource this
+            object represents. Servers may infer this from the endpoint the client
+            submits requests to. Cannot be updated. In CamelCase. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds'
+          type: string
+        metadata:
+          type: object
+        spec:
+          description: JobSettings is similar to dbmodels.JobSettings, the reason
+            it exists is because dbmodels.JobSettings doesn't support ExistingClusterName
+            ExistingClusterName allows discovering databricks clusters by it's kubernetese
+            object name
+          properties:
+            email_notifications:
+              properties:
+                no_alert_for_skipped_runs:
+                  type: boolean
+                on_failure:
+                  items:
+                    type: string
+                  type: array
+                on_start:
+                  items:
+                    type: string
+                  type: array
+                on_success:
+                  items:
+                    type: string
+                  type: array
+              type: object
+            existing_cluster_id:
+              type: string
+            existing_cluster_name:
+              type: string
+            libraries:
+              items:
+                properties:
+                  cran:
+                    properties:
+                      package:
+                        type: string
+                      repo:
+                        type: string
+                    type: object
+                  egg:
+                    type: string
+                  jar:
+                    type: string
+                  maven:
+                    properties:
+                      coordinates:
+                        type: string
+                      exclusions:
+                        items:
+                          type: string
+                        type: array
+                      repo:
+                        type: string
+                    type: object
+                  pypi:
+                    properties:
+                      package:
+                        type: string
+                      repo:
+                        type: string
+                    type: object
+                  whl:
+                    type: string
+                type: object
+              type: array
+            max_concurrent_runs:
+              format: int32
+              type: integer
+            max_retries:
+              format: int32
+              type: integer
+            min_retry_interval_millis:
+              format: int32
+              type: integer
+            name:
+              type: string
+            new_cluster:
+              properties:
+                autoscale:
+                  properties:
+                    max_workers:
+                      format: int32
+                      type: integer
+                    min_workers:
+                      format: int32
+                      type: integer
+                  type: object
+                autotermination_minutes:
+                  format: int32
+                  type: integer
+                cluster_log_conf:
+                  properties:
+                    dbfs:
+                      properties:
+                        destination:
+                          type: string
+                      type: object
+                  type: object
+                cluster_name:
+                  type: string
+                custom_tags:
+                  items:
+                    properties:
+                      key:
+                        type: string
+                      value:
+                        type: string
+                    type: object
+                  type: array
+                driver_node_type_id:
+                  type: string
+                enable_elastic_disk:
+                  type: boolean
+                init_scripts:
+                  items:
+                    properties:
+                      dbfs:
+                        properties:
+                          destination:
+                            type: string
+                        type: object
+                    type: object
+                  type: array
+                instance_pool_id:
+                  type: string
+                node_type_id:
+                  type: string
+                num_workers:
+                  format: int32
+                  type: integer
+                spark_conf:
+                  additionalProperties:
+                    type: string
+                  type: object
+                spark_env_vars:
+                  additionalProperties:
+                    type: string
+                  type: object
+                spark_version:
+                  type: string
+              type: object
+            notebook_task:
+              properties:
+                base_parameters:
+                  additionalProperties:
+                    type: string
+                  type: object
+                notebook_path:
+                  type: string
+              type: object
+            retry_on_timeout:
+              type: boolean
+            schedule:
+              properties:
+                quartz_cron_expression:
+                  type: string
+                timezone_id:
+                  type: string
+              type: object
+            spark_jar_task:
+              properties:
+                jar_uri:
+                  type: string
+                main_class_name:
+                  type: string
+                parameters:
+                  items:
+                    type: string
+                  type: array
+              type: object
+            spark_python_task:
+              properties:
+                parameters:
+                  items:
+                    type: string
+                  type: array
+                python_file:
+                  type: string
+              type: object
+            spark_submit_task:
+              properties:
+                parameters:
+                  items:
+                    type: string
+                  type: array
+              type: object
+            timeout_seconds:
+              format: int32
+              type: integer
+          type: object
+        status:
+          description: DjobStatus is the status object for the Djob
+          properties:
+            job_status:
+              properties:
+                created_time:
+                  format: int64
+                  type: integer
+                creator_user_name:
+                  type: string
+                job_id:
+                  format: int64
+                  type: integer
+                settings:
+                  properties:
+                    email_notifications:
+                      properties:
+                        no_alert_for_skipped_runs:
+                          type: boolean
+                        on_failure:
+                          items:
+                            type: string
+                          type: array
+                        on_start:
+                          items:
+                            type: string
+                          type: array
+                        on_success:
+                          items:
+                            type: string
+                          type: array
+                      type: object
+                    existing_cluster_id:
+                      type: string
+                    libraries:
+                      items:
+                        properties:
+                          cran:
+                            properties:
+                              package:
+                                type: string
+                              repo:
+                                type: string
+                            type: object
+                          egg:
+                            type: string
+                          jar:
+                            type: string
+                          maven:
+                            properties:
+                              coordinates:
+                                type: string
+                              exclusions:
+                                items:
+                                  type: string
+                                type: array
+                              repo:
+                                type: string
+                            type: object
+                          pypi:
+                            properties:
+                              package:
+                                type: string
+                              repo:
+                                type: string
+                            type: object
+                          whl:
+                            type: string
+                        type: object
+                      type: array
+                    max_concurrent_runs:
+                      format: int32
+                      type: integer
+                    max_retries:
+                      format: int32
+                      type: integer
+                    min_retry_interval_millis:
+                      format: int32
+                      type: integer
+                    name:
+                      type: string
+                    new_cluster:
+                      properties:
+                        autoscale:
+                          properties:
+                            max_workers:
+                              format: int32
+                              type: integer
+                            min_workers:
+                              format: int32
+                              type: integer
+                          type: object
+                        autotermination_minutes:
+                          format: int32
+                          type: integer
+                        cluster_log_conf:
+                          properties:
+                            dbfs:
+                              properties:
+                                destination:
+                                  type: string
+                              type: object
+                          type: object
+                        cluster_name:
+                          type: string
+                        custom_tags:
+                          items:
+                            properties:
+                              key:
+                                type: string
+                              value:
+                                type: string
+                            type: object
+                          type: array
+                        driver_node_type_id:
+                          type: string
+                        enable_elastic_disk:
+                          type: boolean
+                        init_scripts:
+                          items:
+                            properties:
+                              dbfs:
+                                properties:
+                                  destination:
+                                    type: string
+                                type: object
+                            type: object
+                          type: array
+                        instance_pool_id:
+                          type: string
+                        node_type_id:
+                          type: string
+                        num_workers:
+                          format: int32
+                          type: integer
+                        spark_conf:
+                          additionalProperties:
+                            type: string
+                          type: object
+                        spark_env_vars:
+                          additionalProperties:
+                            type: string
+                          type: object
+                        spark_version:
+                          type: string
+                      type: object
+                    notebook_task:
+                      properties:
+                        base_parameters:
+                          additionalProperties:
+                            type: string
+                          type: object
+                        notebook_path:
+                          type: string
+                      type: object
+                    retry_on_timeout:
+                      type: boolean
+                    schedule:
+                      properties:
+                        quartz_cron_expression:
+                          type: string
+                        timezone_id:
+                          type: string
+                      type: object
+                    spark_jar_task:
+                      properties:
+                        jar_uri:
+                          type: string
+                        main_class_name:
+                          type: string
+                        parameters:
+                          items:
+                            type: string
+                          type: array
+                      type: object
+                    spark_python_task:
+                      properties:
+                        parameters:
+                          items:
+                            type: string
+                          type: array
+                        python_file:
+                          type: string
+                      type: object
+                    spark_submit_task:
+                      properties:
+                        parameters:
+                          items:
+                            type: string
+                          type: array
+                      type: object
+                    timeout_seconds:
+                      format: int32
+                      type: integer
+                  type: object
+              type: object
+            last_10_runs:
+              items:
+                properties:
+                  cleanup_duration:
+                    format: int64
+                    type: integer
+                  cluster_instance:
+                    properties:
+                      cluster_id:
+                        type: string
+                      spark_context_id:
+                        type: string
+                    type: object
+                  cluster_spec:
+                    properties:
+                      existing_cluster_id:
+                        type: string
+                      libraries:
+                        items:
+                          properties:
+                            cran:
+                              properties:
+                                package:
+                                  type: string
+                                repo:
+                                  type: string
+                              type: object
+                            egg:
+                              type: string
+                            jar:
+                              type: string
+                            maven:
+                              properties:
+                                coordinates:
+                                  type: string
+                                exclusions:
+                                  items:
+                                    type: string
+                                  type: array
+                                repo:
+                                  type: string
+                              type: object
+                            pypi:
+                              properties:
+                                package:
+                                  type: string
+                                repo:
+                                  type: string
+                              type: object
+                            whl:
+                              type: string
+                          type: object
+                        type: array
+                      new_cluster:
+                        properties:
+                          autoscale:
+                            properties:
+                              max_workers:
+                                format: int32
+                                type: integer
+                              min_workers:
+                                format: int32
+                                type: integer
+                            type: object
+                          autotermination_minutes:
+                            format: int32
+                            type: integer
+                          cluster_log_conf:
+                            properties:
+                              dbfs:
+                                properties:
+                                  destination:
+                                    type: string
+                                type: object
+                            type: object
+                          cluster_name:
+                            type: string
+                          custom_tags:
+                            items:
+                              properties:
+                                key:
+                                  type: string
+                                value:
+                                  type: string
+                              type: object
+                            type: array
+                          driver_node_type_id:
+                            type: string
+                          enable_elastic_disk:
+                            type: boolean
+                          init_scripts:
+                            items:
+                              properties:
+                                dbfs:
+                                  properties:
+                                    destination:
+                                      type: string
+                                  type: object
+                              type: object
+                            type: array
+                          instance_pool_id:
+                            type: string
+                          node_type_id:
+                            type: string
+                          num_workers:
+                            format: int32
+                            type: integer
+                          spark_conf:
+                            additionalProperties:
+                              type: string
+                            type: object
+                          spark_env_vars:
+                            additionalProperties:
+                              type: string
+                            type: object
+                          spark_version:
+                            type: string
+                        type: object
+                    type: object
+                  creator_user_name:
+                    type: string
+                  execution_duration:
+                    format: int64
+                    type: integer
+                  job_id:
+                    format: int64
+                    type: integer
+                  number_in_job:
+                    format: int64
+                    type: integer
+                  original_attempt_run_id:
+                    format: int64
+                    type: integer
+                  overriding_parameters:
+                    properties:
+                      jar_params:
+                        items:
+                          type: string
+                        type: array
+                      notebook_params:
+                        additionalProperties:
+                          type: string
+                        type: object
+                      python_params:
+                        items:
+                          type: string
+                        type: array
+                      spark_submit_params:
+                        items:
+                          type: string
+                        type: array
+                    type: object
+                  run_id:
+                    format: int64
+                    type: integer
+                  run_name:
+                    type: string
+                  run_page_url:
+                    type: string
+                  run_type:
+                    type: string
+                  schedule:
+                    properties:
+                      quartz_cron_expression:
+                        type: string
+                      timezone_id:
+                        type: string
+                    type: object
+                  setup_duration:
+                    format: int64
+                    type: integer
+                  start_time:
+                    format: int64
+                    type: integer
+                  state:
+                    properties:
+                      life_cycle_state:
+                        type: string
+                      result_state:
+                        type: string
+                      state_message:
+                        type: string
+                    type: object
+                  task:
+                    properties:
+                      notebook_task:
+                        properties:
+                          base_parameters:
+                            additionalProperties:
+                              type: string
+                            type: object
+                          notebook_path:
+                            type: string
+                        type: object
+                      spark_jar_task:
+                        properties:
+                          jar_uri:
+                            type: string
+                          main_class_name:
+                            type: string
+                          parameters:
+                            items:
+                              type: string
+                            type: array
+                        type: object
+                      spark_python_task:
+                        properties:
+                          parameters:
+                            items:
+                              type: string
+                            type: array
+                          python_file:
+                            type: string
+                        type: object
+                      spark_submit_task:
+                        properties:
+                          parameters:
+                            items:
+                              type: string
+                            type: array
+                        type: object
+                    type: object
+                  trigger:
+                    type: string
+                type: object
+              type: array
+          type: object
+      type: object
+  version: v1alpha1
+  versions:
+  - name: v1alpha1
+    served: true
+    storage: true
+status:
+  acceptedNames:
+    kind: ""
+    plural: ""
+  conditions: []
+  storedVersions: []
+---
+apiVersion: apiextensions.k8s.io/v1beta1
+kind: CustomResourceDefinition
+metadata:
+  annotations:
+    controller-gen.kubebuilder.io/version: v0.2.4
+  creationTimestamp: null
+  name: runs.databricks.microsoft.com
+spec:
+  additionalPrinterColumns:
+  - JSONPath: .metadata.creationTimestamp
+    name: Age
+    type: date
+  - JSONPath: .status.metadata.run_id
+    name: RunID
+    type: integer
+  - JSONPath: .status.metadata.state.life_cycle_state
+    name: State
+    type: string
+  group: databricks.microsoft.com
+  names:
+    kind: Run
+    listKind: RunList
+    plural: runs
+    singular: run
+  scope: Namespaced
+  subresources: {}
+  validation:
+    openAPIV3Schema:
+      description: Run is the Schema for the runs API
+      properties:
+        apiVersion:
+          description: 'APIVersion defines the versioned schema of this representation
+            of an object. Servers should convert recognized schemas to the latest
+            internal value, and may reject unrecognized values. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources'
+          type: string
+        kind:
+          description: 'Kind is a string value representing the REST resource this
+            object represents. Servers may infer this from the endpoint the client
+            submits requests to. Cannot be updated. In CamelCase. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds'
+          type: string
+        metadata:
+          type: object
+        spec:
+          description: RunSpec defines the desired state of Run
+          properties:
+            existing_cluster_id:
+              type: string
+            jar_params:
+              items:
+                type: string
+              type: array
+            job_name:
+              description: dedicated for job run
+              type: string
+            libraries:
+              items:
+                properties:
+                  cran:
+                    properties:
+                      package:
+                        type: string
+                      repo:
+                        type: string
+                    type: object
+                  egg:
+                    type: string
+                  jar:
+                    type: string
+                  maven:
+                    properties:
+                      coordinates:
+                        type: string
+                      exclusions:
+                        items:
+                          type: string
+                        type: array
+                      repo:
+                        type: string
+                    type: object
+                  pypi:
+                    properties:
+                      package:
+                        type: string
+                      repo:
+                        type: string
+                    type: object
+                  whl:
+                    type: string
+                type: object
+              type: array
+            new_cluster:
+              properties:
+                autoscale:
+                  properties:
+                    max_workers:
+                      format: int32
+                      type: integer
+                    min_workers:
+                      format: int32
+                      type: integer
+                  type: object
+                autotermination_minutes:
+                  format: int32
+                  type: integer
+                cluster_log_conf:
+                  properties:
+                    dbfs:
+                      properties:
+                        destination:
+                          type: string
+                      type: object
+                  type: object
+                cluster_name:
+                  type: string
+                custom_tags:
+                  items:
+                    properties:
+                      key:
+                        type: string
+                      value:
+                        type: string
+                    type: object
+                  type: array
+                driver_node_type_id:
+                  type: string
+                enable_elastic_disk:
+                  type: boolean
+                init_scripts:
+                  items:
+                    properties:
+                      dbfs:
+                        properties:
+                          destination:
+                            type: string
+                        type: object
+                    type: object
+                  type: array
+                instance_pool_id:
+                  type: string
+                node_type_id:
+                  type: string
+                num_workers:
+                  format: int32
+                  type: integer
+                spark_conf:
+                  additionalProperties:
+                    type: string
+                  type: object
+                spark_env_vars:
+                  additionalProperties:
+                    type: string
+                  type: object
+                spark_version:
+                  type: string
+              type: object
+            notebook_params:
+              additionalProperties:
+                type: string
+              type: object
+            notebook_task:
+              properties:
+                base_parameters:
+                  additionalProperties:
+                    type: string
+                  type: object
+                notebook_path:
+                  type: string
+              type: object
+            python_params:
+              items:
+                type: string
+              type: array
+            run_name:
+              description: dedicated for direct run
+              type: string
+            spark_jar_task:
+              properties:
+                jar_uri:
+                  type: string
+                main_class_name:
+                  type: string
+                parameters:
+                  items:
+                    type: string
+                  type: array
+              type: object
+            spark_python_task:
+              properties:
+                parameters:
+                  items:
+                    type: string
+                  type: array
+                python_file:
+                  type: string
+              type: object
+            spark_submit_params:
+              items:
+                type: string
+              type: array
+            spark_submit_task:
+              properties:
+                parameters:
+                  items:
+                    type: string
+                  type: array
+              type: object
+            timeout_seconds:
+              format: int32
+              type: integer
+          type: object
+        status:
+          description: JobsRunsGetOutputResponse is the output of the run
+          properties:
+            error:
+              type: string
+            metadata:
+              properties:
+                cleanup_duration:
+                  format: int64
+                  type: integer
+                cluster_instance:
+                  properties:
+                    cluster_id:
+                      type: string
+                    spark_context_id:
+                      type: string
+                  type: object
+                cluster_spec:
+                  properties:
+                    existing_cluster_id:
+                      type: string
+                    libraries:
+                      items:
+                        properties:
+                          cran:
+                            properties:
+                              package:
+                                type: string
+                              repo:
+                                type: string
+                            type: object
+                          egg:
+                            type: string
+                          jar:
+                            type: string
+                          maven:
+                            properties:
+                              coordinates:
+                                type: string
+                              exclusions:
+                                items:
+                                  type: string
+                                type: array
+                              repo:
+                                type: string
+                            type: object
+                          pypi:
+                            properties:
+                              package:
+                                type: string
+                              repo:
+                                type: string
+                            type: object
+                          whl:
+                            type: string
+                        type: object
+                      type: array
+                    new_cluster:
+                      properties:
+                        autoscale:
+                          properties:
+                            max_workers:
+                              format: int32
+                              type: integer
+                            min_workers:
+                              format: int32
+                              type: integer
+                          type: object
+                        autotermination_minutes:
+                          format: int32
+                          type: integer
+                        cluster_log_conf:
+                          properties:
+                            dbfs:
+                              properties:
+                                destination:
+                                  type: string
+                              type: object
+                          type: object
+                        cluster_name:
+                          type: string
+                        custom_tags:
+                          items:
+                            properties:
+                              key:
+                                type: string
+                              value:
+                                type: string
+                            type: object
+                          type: array
+                        driver_node_type_id:
+                          type: string
+                        enable_elastic_disk:
+                          type: boolean
+                        init_scripts:
+                          items:
+                            properties:
+                              dbfs:
+                                properties:
+                                  destination:
+                                    type: string
+                                type: object
+                            type: object
+                          type: array
+                        instance_pool_id:
+                          type: string
+                        node_type_id:
+                          type: string
+                        num_workers:
+                          format: int32
+                          type: integer
+                        spark_conf:
+                          additionalProperties:
+                            type: string
+                          type: object
+                        spark_env_vars:
+                          additionalProperties:
+                            type: string
+                          type: object
+                        spark_version:
+                          type: string
+                      type: object
+                  type: object
+                creator_user_name:
+                  type: string
+                execution_duration:
+                  format: int64
+                  type: integer
+                job_id:
+                  format: int64
+                  type: integer
+                number_in_job:
+                  format: int64
+                  type: integer
+                original_attempt_run_id:
+                  format: int64
+                  type: integer
+                overriding_parameters:
+                  properties:
+                    jar_params:
+                      items:
+                        type: string
+                      type: array
+                    notebook_params:
+                      additionalProperties:
+                        type: string
+                      type: object
+                    python_params:
+                      items:
+                        type: string
+                      type: array
+                    spark_submit_params:
+                      items:
+                        type: string
+                      type: array
+                  type: object
+                run_id:
+                  format: int64
+                  type: integer
+                run_name:
+                  type: string
+                run_page_url:
+                  type: string
+                run_type:
+                  type: string
+                schedule:
+                  properties:
+                    quartz_cron_expression:
+                      type: string
+                    timezone_id:
+                      type: string
+                  type: object
+                setup_duration:
+                  format: int64
+                  type: integer
+                start_time:
+                  format: int64
+                  type: integer
+                state:
+                  properties:
+                    life_cycle_state:
+                      type: string
+                    result_state:
+                      type: string
+                    state_message:
+                      type: string
+                  type: object
+                task:
+                  properties:
+                    notebook_task:
+                      properties:
+                        base_parameters:
+                          additionalProperties:
+                            type: string
+                          type: object
+                        notebook_path:
+                          type: string
+                      type: object
+                    spark_jar_task:
+                      properties:
+                        jar_uri:
+                          type: string
+                        main_class_name:
+                          type: string
+                        parameters:
+                          items:
+                            type: string
+                          type: array
+                      type: object
+                    spark_python_task:
+                      properties:
+                        parameters:
+                          items:
+                            type: string
+                          type: array
+                        python_file:
+                          type: string
+                      type: object
+                    spark_submit_task:
+                      properties:
+                        parameters:
+                          items:
+                            type: string
+                          type: array
+                      type: object
+                  type: object
+                trigger:
+                  type: string
+              type: object
+            notebook_output:
+              properties:
+                result:
+                  type: string
+                truncated:
+                  type: boolean
+              type: object
+          type: object
+      type: object
+  version: v1alpha1
+  versions:
+  - name: v1alpha1
+    served: true
+    storage: true
+status:
+  acceptedNames:
+    kind: ""
+    plural: ""
+  conditions: []
+  storedVersions: []
+---
+apiVersion: apiextensions.k8s.io/v1beta1
+kind: CustomResourceDefinition
+metadata:
+  annotations:
+    controller-gen.kubebuilder.io/version: v0.2.4
+  creationTimestamp: null
+  name: secretscopes.databricks.microsoft.com
+spec:
+  group: databricks.microsoft.com
+  names:
+    kind: SecretScope
+    listKind: SecretScopeList
+    plural: secretscopes
+    singular: secretscope
+  scope: Namespaced
+  validation:
+    openAPIV3Schema:
+      description: SecretScope is the Schema for the secretscopes API
+      properties:
+        apiVersion:
+          description: 'APIVersion defines the versioned schema of this representation
+            of an object. Servers should convert recognized schemas to the latest
+            internal value, and may reject unrecognized values. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources'
+          type: string
+        kind:
+          description: 'Kind is a string value representing the REST resource this
+            object represents. Servers may infer this from the endpoint the client
+            submits requests to. Cannot be updated. In CamelCase. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds'
+          type: string
+        metadata:
+          type: object
+        spec:
+          description: SecretScopeSpec defines the desired state of SecretScope
+          properties:
+            acls:
+              items:
+                description: SecretScopeACL represents ACLs for a secret scope
+                properties:
+                  permission:
+                    type: string
+                  principal:
+                    type: string
+                type: object
+              type: array
+            initial_manage_permission:
+              description: 'INSERT ADDITIONAL SPEC FIELDS - desired state of cluster
+                Important: Run "make" to regenerate code after modifying this file'
+              type: string
+            secrets:
+              items:
+                description: SecretScopeSecret represents a secret in a secret scope
+                properties:
+                  byte_value:
+                    type: string
+                  key:
+                    type: string
+                  string_value:
+                    type: string
+                  value_from:
+                    description: SecretScopeValueFrom references a secret scope
+                    properties:
+                      secret_key_ref:
+                        description: SecretScopeKeyRef refers to a secret scope Key
+                        properties:
+                          key:
+                            type: string
+                          name:
+                            type: string
+                        type: object
+                    type: object
+                type: object
+              type: array
+          type: object
+        status:
+          description: SecretScopeStatus defines the observed state of SecretScope
+          properties:
+            secretinclusteravailable:
+              type: boolean
+            secretscope:
+              description: 'INSERT ADDITIONAL STATUS FIELD - define observed state
+                of cluster Important: Run "make" to regenerate code after modifying
+                this file'
+              properties:
+                backend_type:
+                  type: string
+                name:
+                  type: string
+              type: object
+          type: object
+      type: object
+  version: v1alpha1
+  versions:
+  - name: v1alpha1
+    served: true
+    storage: true
+status:
+  acceptedNames:
+    kind: ""
+    plural: ""
+  conditions: []
+  storedVersions: []
+---
+apiVersion: apiextensions.k8s.io/v1beta1
+kind: CustomResourceDefinition
+metadata:
+  annotations:
+    controller-gen.kubebuilder.io/version: v0.2.4
+  creationTimestamp: null
+  name: workspaceitems.databricks.microsoft.com
+spec:
+  additionalPrinterColumns:
+  - JSONPath: .metadata.creationTimestamp
+    name: Age
+    type: date
+  - JSONPath: .status.object_hash
+    name: SHA1SUM
+    type: string
+  - JSONPath: .status.object_info.language
+    name: Language
+    type: string
+  - JSONPath: .status.object_info.object_type
+    name: Type
+    priority: 1
+    type: string
+  - JSONPath: .status.object_info.path
+    name: Path
+    priority: 1
+    type: string
+  group: databricks.microsoft.com
+  names:
+    kind: WorkspaceItem
+    listKind: WorkspaceItemList
+    plural: workspaceitems
+    singular: workspaceitem
+  scope: Namespaced
+  subresources: {}
+  validation:
+    openAPIV3Schema:
+      description: WorkspaceItem is the Schema for the workspaceitems API
+      properties:
+        apiVersion:
+          description: 'APIVersion defines the versioned schema of this representation
+            of an object. Servers should convert recognized schemas to the latest
+            internal value, and may reject unrecognized values. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources'
+          type: string
+        kind:
+          description: 'Kind is a string value representing the REST resource this
+            object represents. Servers may infer this from the endpoint the client
+            submits requests to. Cannot be updated. In CamelCase. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds'
+          type: string
+        metadata:
+          type: object
+        spec:
+          description: WorkspaceItemSpec defines the desired state of WorkspaceItem
+          properties:
+            content:
+              type: string
+            format:
+              type: string
+            language:
+              type: string
+            path:
+              type: string
+          type: object
+        status:
+          description: WorkspaceItemStatus defines the observed state of WorkspaceItem
+          properties:
+            object_hash:
+              type: string
+            object_info:
+              properties:
+                language:
+                  type: string
+                object_type:
+                  type: string
+                path:
+                  type: string
+              type: object
+          type: object
+      type: object
+  version: v1alpha1
+  versions:
+  - name: v1alpha1
+    served: true
+    storage: true
+status:
+  acceptedNames:
+    kind: ""
+    plural: ""
+  conditions: []
+  storedVersions: []
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  name: azure-databricks-operator-leader-election-role
+  namespace: azure-databricks-operator-system
+rules:
+- apiGroups:
+  - ""
+  resources:
+  - configmaps
+  verbs:
+  - get
+  - list
+  - watch
+  - create
+  - update
+  - patch
+  - delete
+- apiGroups:
+  - ""
+  resources:
+  - configmaps/status
+  verbs:
+  - get
+  - update
+  - patch
+- apiGroups:
+  - ""
+  resources:
+  - events
+  verbs:
+  - create
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  creationTimestamp: null
+  name: azure-databricks-operator-manager-role
+rules:
+- apiGroups:
+  - apps
+  resources:
+  - deployments
+  verbs:
+  - create
+  - delete
+  - get
+  - list
+  - patch
+  - update
+  - watch
+- apiGroups:
+  - apps
+  resources:
+  - deployments/status
+  verbs:
+  - get
+  - patch
+  - update
+- apiGroups:
+  - ""
+  resources:
+  - events
+  verbs:
+  - create
+  - delete
+  - get
+  - list
+  - patch
+  - update
+  - watch
+- apiGroups:
+  - ""
+  resources:
+  - secrets
+  verbs:
+  - create
+  - delete
+  - get
+  - list
+  - patch
+  - update
+  - watch
+- apiGroups:
+  - databricks.microsoft.com
+  resources:
+  - dbfsblocks
+  verbs:
+  - create
+  - delete
+  - get
+  - list
+  - patch
+  - update
+  - watch
+- apiGroups:
+  - databricks.microsoft.com
+  resources:
+  - dbfsblocks/status
+  verbs:
+  - get
+  - patch
+  - update
+- apiGroups:
+  - databricks.microsoft.com
+  resources:
+  - dclusters
+  verbs:
+  - create
+  - delete
+  - get
+  - list
+  - patch
+  - update
+  - watch
+- apiGroups:
+  - databricks.microsoft.com
+  resources:
+  - dclusters/status
+  verbs:
+  - get
+  - patch
+  - update
+- apiGroups:
+  - databricks.microsoft.com
+  resources:
+  - djobs
+  verbs:
+  - create
+  - delete
+  - get
+  - list
+  - patch
+  - update
+  - watch
+- apiGroups:
+  - databricks.microsoft.com
+  resources:
+  - djobs/status
+  verbs:
+  - get
+  - patch
+  - update
+- apiGroups:
+  - databricks.microsoft.com
+  resources:
+  - events
+  verbs:
+  - create
+  - delete
+  - get
+  - list
+  - patch
+  - update
+  - watch
+- apiGroups:
+  - databricks.microsoft.com
+  resources:
+  - runs
+  verbs:
+  - create
+  - delete
+  - get
+  - list
+  - patch
+  - update
+  - watch
+- apiGroups:
+  - databricks.microsoft.com
+  resources:
+  - runs/status
+  verbs:
+  - get
+  - patch
+  - update
+- apiGroups:
+  - databricks.microsoft.com
+  resources:
+  - secretscopes
+  verbs:
+  - create
+  - delete
+  - get
+  - list
+  - patch
+  - update
+  - watch
+- apiGroups:
+  - databricks.microsoft.com
+  resources:
+  - secretscopes/status
+  verbs:
+  - get
+  - patch
+  - update
+- apiGroups:
+  - databricks.microsoft.com
+  resources:
+  - workspaceitems
+  verbs:
+  - create
+  - delete
+  - get
+  - list
+  - patch
+  - update
+  - watch
+- apiGroups:
+  - databricks.microsoft.com
+  resources:
+  - workspaceitems/status
+  verbs:
+  - get
+  - patch
+  - update
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: azure-databricks-operator-proxy-role
+rules:
+- apiGroups:
+  - authentication.k8s.io
+  resources:
+  - tokenreviews
+  verbs:
+  - create
+- apiGroups:
+  - authorization.k8s.io
+  resources:
+  - subjectaccessreviews
+  verbs:
+  - create
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: azure-databricks-operator-leader-election-rolebinding
+  namespace: azure-databricks-operator-system
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: Role
+  name: azure-databricks-operator-leader-election-role
+subjects:
+- kind: ServiceAccount
+  name: default
+  namespace: azure-databricks-operator-system
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: azure-databricks-operator-manager-rolebinding
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: azure-databricks-operator-manager-role
+subjects:
+- kind: ServiceAccount
+  name: default
+  namespace: azure-databricks-operator-system
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: azure-databricks-operator-proxy-rolebinding
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: azure-databricks-operator-proxy-role
+subjects:
+- kind: ServiceAccount
+  name: default
+  namespace: azure-databricks-operator-system
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    control-plane: controller-manager
+  name: azure-databricks-operator-controller-manager-metrics-service
+  namespace: azure-databricks-operator-system
+spec:
+  ports:
+  - name: https
+    port: 8443
+    targetPort: https
+  selector:
+    control-plane: controller-manager
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    control-plane: controller-manager
+  name: azure-databricks-operator-controller-manager
+  namespace: azure-databricks-operator-system
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      control-plane: controller-manager
+  template:
+    metadata:
+      labels:
+        control-plane: controller-manager
+    spec:
+      containers:
+      - args:
+        - --secure-listen-address=0.0.0.0:8443
+        - --upstream=http://127.0.0.1:8080/
+        - --logtostderr=true
+        - --v=10
+        image: gcr.io/kubebuilder/kube-rbac-proxy:v0.4.1
+        name: kube-rbac-proxy
+        ports:
+        - containerPort: 8443
+          name: https
+      - args:
+        - --metrics-addr=127.0.0.1:8080
+        - --enable-leader-election
+        command:
+        - /manager
+        env:
+        - name: DATABRICKS_HOST
+          valueFrom:
+            secretKeyRef:
+              key: DatabricksHost
+              name: dbrickssettings
+        - name: DATABRICKS_TOKEN
+          valueFrom:
+            secretKeyRef:
+              key: DatabricksToken
+              name: dbrickssettings
+        image: mcr.microsoft.com/k8s/azure-databricks/operator:bc604f475c970b9b07f15d9ab71c49204d0690fe
+        name: manager
+        resources:
+          limits:
+            cpu: 500m
+            memory: 1Gi
+          requests:
+            cpu: 200m
+            memory: 512Mi
+      terminationGracePeriodSeconds: 10
