@@ -13,12 +13,8 @@ resource "kubernetes_secret" "secret_registry" {
   }
 }
 
-resource "local_file" "databricks" {
-  filename = "${path.module}/config/databricks/setup.yaml"
-}
-
 resource "null_resource" "databricks" {
   provisioner "local-exec" {
-    command = "kubectl apply -f ${local_file.databricks.filename}"
+    command = "kubectl apply -f '${path.module}/config/databricks/setup.yaml'"
   }
 }
