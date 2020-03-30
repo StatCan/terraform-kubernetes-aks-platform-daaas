@@ -3,7 +3,9 @@ resource "kubernetes_namespace" "databricks" {
   metadata {
     name = "azure-databricks-operator-system"
 
-    labels = {}
+    labels = {
+      control-plane = "controller-manager"
+    }
   }
 }
 
