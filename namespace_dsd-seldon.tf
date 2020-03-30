@@ -15,7 +15,7 @@ module "namespace_dsd-seldon" {
   name = "${kubernetes_namespace.dsd-seldon.metadata.0.name}"
   namespace_admins = {
     users  = []
-    groups = var.groups_daaas
+    groups = var.groups_esd
   }
 
   # ServiceAccount
