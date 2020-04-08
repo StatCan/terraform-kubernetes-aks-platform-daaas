@@ -5,7 +5,9 @@ resource "kubernetes_namespace" "gatekeeper_system" {
     name = "gatekeeper-system"
 
     labels = {
-      control-plane = "gatekeeper-system"
+      "admission.gatekeeper.sh/ignore" = "no-self-managing"
+      control-plane = "controller-manager"
+      "gatekeeper.sh/system" = "yes"
     }
   }
 }
