@@ -38,7 +38,7 @@ resource "kubernetes_daemonset" "nvidia" {
 
           volume_mount {
             name       = "device-plugin"
-            mount_path = "nvidia-device-plugin-ctr"
+            mount_path = "/var/lib/kubelet/device-plugins"
           }
         }
 
@@ -53,6 +53,12 @@ resource "kubernetes_daemonset" "nvidia" {
           effect   = "NoSchedule"
         }
 
+        toleration {
+          key      = "dedicated"
+          operator = "Exists"
+          effect   = "NoSchedule"
+        }
+
         volume {
           name = "device-plugin"
           host_path {
@@ -63,4 +69,3 @@ resource "kubernetes_daemonset" "nvidia" {
     }
   }
 }
-
