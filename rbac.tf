@@ -132,3 +132,45 @@ resource "kubernetes_cluster_role_binding" "ci-deploy-cluster-admin" {
     namespace = "${kubernetes_namespace.ci.metadata.0.name}"
   }
 }
+
+resource "kubernetes_role" "minio-port-forward" {
+  metadata {
+    name      = "minio-port-forward"
+    namespace = "kubeflow"
+  }
+
+  rule {
+    api_groups     = [""]
+    resources      = ["services", "pods"]
+    verbs          = ["get", "list"]
+  }
+
+  rule {
+    api_groups     = [""]
+    resources      = ["pods/portforward"]
+    verbs          = ["get", "create"]
+  }
+}
+
+resource "kubernetes_role_binding" "minio-port-forward" {
+  metadata {
+    name = "minio-port-forward"
+    namespace = "kubeflow"
+  }
+
+  role_ref {
+    api_group = "rbac.authorization.k8s.io"
+    kind      = "Role"
+    name      = "minio-port-forward"
+  }
+
+  # Groups
+  dynamic "subject" {
+    for_each = "${var.groups_pachyderm}"
+    content {
+      kind      = "Group"
+      name      = "${subject.value}"
+      api_group = "rbac.authorization.k8s.io"
+    }
+  }
+}
