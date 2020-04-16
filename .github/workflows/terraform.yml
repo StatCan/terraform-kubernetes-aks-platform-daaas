@@ -17,14 +17,14 @@ jobs:
           mkdir -p /home/runner/work/_temp/_github_home/.kube
           echo "$KUBECONFIG" | base64 --decode > /home/runner/work/_temp/_github_home/.kube/config
       - name: 'Terraform Format'
-        uses: hashicorp/terraform-github-actions@master
+        uses: statcan/terraform-github-actions@master
         with:
           tf_actions_version: 0.12.13
           tf_actions_subcommand: 'fmt'
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - name: 'Terraform Init'
-        uses: hashicorp/terraform-github-actions@master
+        uses: statcan/terraform-github-actions@master
         with:
           tf_actions_version: 0.12.13
           tf_actions_subcommand: 'init'
@@ -63,7 +63,7 @@ jobs:
           TF_VAR_velero_backup_storage_bucket: ${{ secrets.TF_VAR_velero_backup_storage_bucket }}
           TF_VAR_velero_backup_storage_resource_group: ${{ secrets.TF_VAR_velero_backup_storage_resource_group }}
       - name: 'Terraform Validate'
-        uses: hashicorp/terraform-github-actions@master
+        uses: statcan/terraform-github-actions@master
         with:
           tf_actions_version: 0.12.13
           tf_actions_subcommand: 'validate'
@@ -101,7 +101,7 @@ jobs:
           TF_VAR_velero_backup_storage_bucket: ${{ secrets.TF_VAR_velero_backup_storage_bucket }}
           TF_VAR_velero_backup_storage_resource_group: ${{ secrets.TF_VAR_velero_backup_storage_resource_group }}
       - name: 'Terraform Plan'
-        uses: hashicorp/terraform-github-actions@master
+        uses: statcan/terraform-github-actions@master
         with:
           tf_actions_version: 0.12.13
           tf_actions_subcommand: 'plan'
