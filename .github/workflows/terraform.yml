@@ -14,7 +14,7 @@ jobs:
         env:
           KUBECONFIG: ${{ secrets.KUBECONFIG }}
         run: |
-          mkdir -p /home/runner/work/_temp/_github_home/.kube/config
+          mkdir -p /home/runner/work/_temp/_github_home/.kube
           echo "$KUBECONFIG" | base64 --decode > /home/runner/work/_temp/_github_home/.kube/config
       - name: 'Terraform Format'
         uses: hashicorp/terraform-github-actions@master
