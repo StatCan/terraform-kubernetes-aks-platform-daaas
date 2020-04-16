@@ -8,14 +8,14 @@ jobs:
     name: 'Terraform'
     runs-on: ubuntu-latest
     steps:
-      - name: Write key file
-        env:
-          SSH_KEY: ${{ secrets.SSH_KEY }}
-        run: |
-          mkdir -p ~/.ssh/
-          echo "$SSH_KEY" | base64 --decode > ~/.ssh/covid.pub
       - name: 'Checkout'
         uses: actions/checkout@master
+      - name: Write Kubeconfig
+        env:
+          KUBECONFIG: ${{ secrets.KUBECONFIG }}
+        run: |
+          mkdir -p /home/runner/work/_temp/_github_home/.kube/config
+          echo "$KUBECONFIG" | base64 --decode > /home/runner/work/_temp/_github_home/.kube/config
       - name: 'Terraform Format'
         uses: hashicorp/terraform-github-actions@master
         with:
@@ -36,6 +36,32 @@ jobs:
           ARM_CLIENT_SECRET: ${{ secrets.ARM_CLIENT_SECRET }}
           ARM_SUBSCRIPTION_ID: ${{ secrets.ARM_SUBSCRIPTION_ID }}
           ARM_TENANT_ID: ${{ secrets.ARM_TENANT_ID }}
+          TF_VAR_cert_manager_azure_client_secret: ${{ secrets.TF_VAR_cert_manager_azure_client_secret }}
+          TF_VAR_cert_manager_azure_resource_group_name: ${{ secrets.TF_VAR_cert_manager_azure_resource_group_name }}
+          TF_VAR_cert_manager_azure_service_principal_id: ${{ secrets.TF_VAR_cert_manager_azure_service_principal_id }}
+          TF_VAR_cert_manager_azure_subscription_id: ${{ secrets.TF_VAR_cert_manager_azure_subscription_id }}
+          TF_VAR_cert_manager_azure_tenant_id: ${{ secrets.TF_VAR_cert_manager_azure_tenant_id }}
+          TF_VAR_cert_manager_azure_zone_name: ${{ secrets.TF_VAR_cert_manager_azure_zone_name }}
+          TF_VAR_cert_manager_letsencrypt_email: ${{ secrets.TF_VAR_cert_manager_letsencrypt_email }}
+          TF_VAR_databricks_host: ${{ secrets.TF_VAR_databricks_host }}
+          TF_VAR_databricks_token: ${{ secrets.TF_VAR_databricks_token }}
+          TF_VAR_enable_kubernetes_secret: ${{ secrets.TF_VAR_enable_kubernetes_secret }}
+          TF_VAR_groups_daaas: ${{ secrets.TF_VAR_groups_daaas }}
+          TF_VAR_groups_esd: ${{ secrets.TF_VAR_groups_esd }}
+          TF_VAR_groups_pachyderm: ${{ secrets.TF_VAR_groups_pachyderm }}
+          TF_VAR_ingress_domain: ${{ secrets.TF_VAR_ingress_domain }}
+          TF_VAR_kubernetes_rbac_daaas_group: ${{ secrets.TF_VAR_kubernetes_rbac_daaas_group }}
+          TF_VAR_kubernetes_rbac_group: ${{ secrets.TF_VAR_kubernetes_rbac_group }}
+          TF_VAR_kubernetes_rbac_pachyderm_group: ${{ secrets.TF_VAR_kubernetes_rbac_pachyderm_group }}
+          TF_VAR_prometheus_grafana_password: ${{ secrets.TF_VAR_prometheus_grafana_password }}
+          TF_VAR_velero_azure_client_id: ${{ secrets.TF_VAR_velero_azure_client_id }}
+          TF_VAR_velero_azure_client_secret: ${{ secrets.TF_VAR_velero_azure_client_secret }}
+          TF_VAR_velero_azure_resource_group: ${{ secrets.TF_VAR_velero_azure_resource_group }}
+          TF_VAR_velero_azure_subscription_id: ${{ secrets.TF_VAR_velero_azure_subscription_id }}
+          TF_VAR_velero_azure_tenant_id: ${{ secrets.TF_VAR_velero_azure_tenant_id }}
+          TF_VAR_velero_backup_storage_account: ${{ secrets.TF_VAR_velero_backup_storage_account }}
+          TF_VAR_velero_backup_storage_bucket: ${{ secrets.TF_VAR_velero_backup_storage_bucket }}
+          TF_VAR_velero_backup_storage_resource_group: ${{ secrets.TF_VAR_velero_backup_storage_resource_group }}
       - name: 'Terraform Validate'
         uses: hashicorp/terraform-github-actions@master
         with:
@@ -48,6 +74,32 @@ jobs:
           ARM_CLIENT_SECRET: ${{ secrets.ARM_CLIENT_SECRET }}
           ARM_SUBSCRIPTION_ID: ${{ secrets.ARM_SUBSCRIPTION_ID }}
           ARM_TENANT_ID: ${{ secrets.ARM_TENANT_ID }}
+          TF_VAR_cert_manager_azure_client_secret: ${{ secrets.TF_VAR_cert_manager_azure_client_secret }}
+          TF_VAR_cert_manager_azure_resource_group_name: ${{ secrets.TF_VAR_cert_manager_azure_resource_group_name }}
+          TF_VAR_cert_manager_azure_service_principal_id: ${{ secrets.TF_VAR_cert_manager_azure_service_principal_id }}
+          TF_VAR_cert_manager_azure_subscription_id: ${{ secrets.TF_VAR_cert_manager_azure_subscription_id }}
+          TF_VAR_cert_manager_azure_tenant_id: ${{ secrets.TF_VAR_cert_manager_azure_tenant_id }}
+          TF_VAR_cert_manager_azure_zone_name: ${{ secrets.TF_VAR_cert_manager_azure_zone_name }}
+          TF_VAR_cert_manager_letsencrypt_email: ${{ secrets.TF_VAR_cert_manager_letsencrypt_email }}
+          TF_VAR_databricks_host: ${{ secrets.TF_VAR_databricks_host }}
+          TF_VAR_databricks_token: ${{ secrets.TF_VAR_databricks_token }}
+          TF_VAR_enable_kubernetes_secret: ${{ secrets.TF_VAR_enable_kubernetes_secret }}
+          TF_VAR_groups_daaas: ${{ secrets.TF_VAR_groups_daaas }}
+          TF_VAR_groups_esd: ${{ secrets.TF_VAR_groups_esd }}
+          TF_VAR_groups_pachyderm: ${{ secrets.TF_VAR_groups_pachyderm }}
+          TF_VAR_ingress_domain: ${{ secrets.TF_VAR_ingress_domain }}
+          TF_VAR_kubernetes_rbac_daaas_group: ${{ secrets.TF_VAR_kubernetes_rbac_daaas_group }}
+          TF_VAR_kubernetes_rbac_group: ${{ secrets.TF_VAR_kubernetes_rbac_group }}
+          TF_VAR_kubernetes_rbac_pachyderm_group: ${{ secrets.TF_VAR_kubernetes_rbac_pachyderm_group }}
+          TF_VAR_prometheus_grafana_password: ${{ secrets.TF_VAR_prometheus_grafana_password }}
+          TF_VAR_velero_azure_client_id: ${{ secrets.TF_VAR_velero_azure_client_id }}
+          TF_VAR_velero_azure_client_secret: ${{ secrets.TF_VAR_velero_azure_client_secret }}
+          TF_VAR_velero_azure_resource_group: ${{ secrets.TF_VAR_velero_azure_resource_group }}
+          TF_VAR_velero_azure_subscription_id: ${{ secrets.TF_VAR_velero_azure_subscription_id }}
+          TF_VAR_velero_azure_tenant_id: ${{ secrets.TF_VAR_velero_azure_tenant_id }}
+          TF_VAR_velero_backup_storage_account: ${{ secrets.TF_VAR_velero_backup_storage_account }}
+          TF_VAR_velero_backup_storage_bucket: ${{ secrets.TF_VAR_velero_backup_storage_bucket }}
+          TF_VAR_velero_backup_storage_resource_group: ${{ secrets.TF_VAR_velero_backup_storage_resource_group }}
       - name: 'Terraform Plan'
         uses: hashicorp/terraform-github-actions@master
         with:
@@ -60,3 +112,29 @@ jobs:
           ARM_CLIENT_SECRET: ${{ secrets.ARM_CLIENT_SECRET }}
           ARM_SUBSCRIPTION_ID: ${{ secrets.ARM_SUBSCRIPTION_ID }}
           ARM_TENANT_ID: ${{ secrets.ARM_TENANT_ID }}
+          TF_VAR_cert_manager_azure_client_secret: ${{ secrets.TF_VAR_cert_manager_azure_client_secret }}
+          TF_VAR_cert_manager_azure_resource_group_name: ${{ secrets.TF_VAR_cert_manager_azure_resource_group_name }}
+          TF_VAR_cert_manager_azure_service_principal_id: ${{ secrets.TF_VAR_cert_manager_azure_service_principal_id }}
+          TF_VAR_cert_manager_azure_subscription_id: ${{ secrets.TF_VAR_cert_manager_azure_subscription_id }}
+          TF_VAR_cert_manager_azure_tenant_id: ${{ secrets.TF_VAR_cert_manager_azure_tenant_id }}
+          TF_VAR_cert_manager_azure_zone_name: ${{ secrets.TF_VAR_cert_manager_azure_zone_name }}
+          TF_VAR_cert_manager_letsencrypt_email: ${{ secrets.TF_VAR_cert_manager_letsencrypt_email }}
+          TF_VAR_databricks_host: ${{ secrets.TF_VAR_databricks_host }}
+          TF_VAR_databricks_token: ${{ secrets.TF_VAR_databricks_token }}
+          TF_VAR_enable_kubernetes_secret: ${{ secrets.TF_VAR_enable_kubernetes_secret }}
+          TF_VAR_groups_daaas: ${{ secrets.TF_VAR_groups_daaas }}
+          TF_VAR_groups_esd: ${{ secrets.TF_VAR_groups_esd }}
+          TF_VAR_groups_pachyderm: ${{ secrets.TF_VAR_groups_pachyderm }}
+          TF_VAR_ingress_domain: ${{ secrets.TF_VAR_ingress_domain }}
+          TF_VAR_kubernetes_rbac_daaas_group: ${{ secrets.TF_VAR_kubernetes_rbac_daaas_group }}
+          TF_VAR_kubernetes_rbac_group: ${{ secrets.TF_VAR_kubernetes_rbac_group }}
+          TF_VAR_kubernetes_rbac_pachyderm_group: ${{ secrets.TF_VAR_kubernetes_rbac_pachyderm_group }}
+          TF_VAR_prometheus_grafana_password: ${{ secrets.TF_VAR_prometheus_grafana_password }}
+          TF_VAR_velero_azure_client_id: ${{ secrets.TF_VAR_velero_azure_client_id }}
+          TF_VAR_velero_azure_client_secret: ${{ secrets.TF_VAR_velero_azure_client_secret }}
+          TF_VAR_velero_azure_resource_group: ${{ secrets.TF_VAR_velero_azure_resource_group }}
+          TF_VAR_velero_azure_subscription_id: ${{ secrets.TF_VAR_velero_azure_subscription_id }}
+          TF_VAR_velero_azure_tenant_id: ${{ secrets.TF_VAR_velero_azure_tenant_id }}
+          TF_VAR_velero_backup_storage_account: ${{ secrets.TF_VAR_velero_backup_storage_account }}
+          TF_VAR_velero_backup_storage_bucket: ${{ secrets.TF_VAR_velero_backup_storage_bucket }}
+          TF_VAR_velero_backup_storage_resource_group: ${{ secrets.TF_VAR_velero_backup_storage_resource_group }}
