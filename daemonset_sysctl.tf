@@ -52,19 +52,19 @@ resource "kubernetes_daemonset" "sysctl" {
 
           resources {
             requests {
-              cpu = "10m"
+              cpu    = "10m"
               memory = "8Mi"
             }
 
             limits {
-              cpu = "10m"
+              cpu    = "10m"
               memory = "8Mi"
             }
           }
         }
 
-        host_pid = true
-        host_ipc = true
+        host_pid     = true
+        host_ipc     = true
         host_network = true
         node_selector = {
           "kubernetes.io/os" = "linux"

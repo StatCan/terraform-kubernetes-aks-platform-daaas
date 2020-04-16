@@ -140,21 +140,21 @@ resource "kubernetes_role" "minio-port-forward" {
   }
 
   rule {
-    api_groups     = [""]
-    resources      = ["services", "pods"]
-    verbs          = ["get", "list"]
+    api_groups = [""]
+    resources  = ["services", "pods"]
+    verbs      = ["get", "list"]
   }
 
   rule {
-    api_groups     = [""]
-    resources      = ["pods/portforward"]
-    verbs          = ["get", "create"]
+    api_groups = [""]
+    resources  = ["pods/portforward"]
+    verbs      = ["get", "create"]
   }
 }
 
 resource "kubernetes_role_binding" "minio-port-forward" {
   metadata {
-    name = "minio-port-forward"
+    name      = "minio-port-forward"
     namespace = "kubeflow"
   }
 
