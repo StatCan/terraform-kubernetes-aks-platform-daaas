@@ -4,7 +4,7 @@ The overall flow for this module is pretty simple:
 
 * Create Azure storage account to store Terraform state
 * Create Azure AKS Platform configuration in a modular manner
-* Deploy the infrastructure incrementally
+* Deploy the infrastructure incrementally using GitHub Actions
 
 ## Security Controls
 
