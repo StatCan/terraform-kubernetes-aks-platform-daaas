@@ -17,7 +17,7 @@ resource "kubernetes_deployment" "opa_minio" {
 
     selector {
       match_labels = {
-        "app.kubernetes.io/name"     = "minio"
+        "app.kubernetes.io/name"     = "opa"
         "app.kubernetes.io/instance" = "minio"
       }
     }
@@ -25,7 +25,7 @@ resource "kubernetes_deployment" "opa_minio" {
     template {
       metadata {
         labels = {
-          "app.kubernetes.io/name"     = "minio"
+          "app.kubernetes.io/name"     = "opa"
           "app.kubernetes.io/instance" = "minio"
         }
       }
