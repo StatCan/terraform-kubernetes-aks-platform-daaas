@@ -76,13 +76,13 @@ resource "kubernetes_deployment" "opa_minio" {
 
           resources {
             requests {
-              cpu    = "10m"
-              memory = "8Mi"
+              cpu    = "100m"
+              memory = "200Mi"
             }
 
             limits {
-              cpu    = "10m"
-              memory = "8Mi"
+              cpu    = "100m"
+              memory = "200Mi"
             }
           }
         }
