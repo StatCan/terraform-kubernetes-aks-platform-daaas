@@ -94,7 +94,7 @@ resource "kubernetes_deployment" "opa_minio" {
         volume {
           name = "policies"
           config_map {
-            name = "minio-opa-policies"
+            name = kubernetes_config_map.opa_minio.metadata.0.name
           }
         }
       }
