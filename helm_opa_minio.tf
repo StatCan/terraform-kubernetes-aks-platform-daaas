@@ -17,7 +17,7 @@ resource "kubernetes_deployment" "opa_minio" {
 
     selector {
       match_labels = {
-        "app.kubernetes.io/name"     = "minio"
+        "app.kubernetes.io/name"     = "opa"
         "app.kubernetes.io/instance" = "minio"
       }
     }
@@ -25,7 +25,7 @@ resource "kubernetes_deployment" "opa_minio" {
     template {
       metadata {
         labels = {
-          "app.kubernetes.io/name"     = "minio"
+          "app.kubernetes.io/name"     = "opa"
           "app.kubernetes.io/instance" = "minio"
         }
       }
@@ -76,13 +76,13 @@ resource "kubernetes_deployment" "opa_minio" {
 
           resources {
             requests {
-              cpu    = "10m"
-              memory = "8Mi"
+              cpu    = "100m"
+              memory = "200Mi"
             }
 
             limits {
-              cpu    = "10m"
-              memory = "8Mi"
+              cpu    = "100m"
+              memory = "200Mi"
             }
           }
         }
@@ -94,7 +94,7 @@ resource "kubernetes_deployment" "opa_minio" {
         volume {
           name = "policies"
           config_map {
-            name = "minio-opa-policies"
+            name = kubernetes_config_map.opa_minio.metadata.0.name
           }
         }
       }
