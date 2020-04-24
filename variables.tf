@@ -148,3 +148,11 @@ variable "databricks_host" {
 variable "databricks_token" {
   description = "The databricks token value"
 }
+
+variable "vault_aad_resource_id" {
+  description = "Vault AAD Resource ID"
+}
+
+variable "vault_aad_client_id" {
+  description = "Vault AAD Client ID"
+}
