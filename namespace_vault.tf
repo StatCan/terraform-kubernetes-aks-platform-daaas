@@ -1,4 +1,4 @@
-# Web
+# Vault
 
 resource "kubernetes_namespace" "vault" {
   metadata {

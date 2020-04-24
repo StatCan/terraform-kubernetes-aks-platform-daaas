@@ -68,7 +68,6 @@ vault:
           cluster_address = "[::]:8201"
         }
 
-        #TODO Create and update key-vault
         seal "azurekeyvault" {
           tenant_id = ""
           vault_name = ""
@@ -78,7 +77,7 @@ vault:
         #TODO Create and update storage account
         storage "azure" {
           accountName = "k8scc01covidvaultdoonr"
-          accountKey = ""
+          accountKey = "${var.vault_azure_storage_key}"
           container = "vault"
         }
 
