@@ -24,7 +24,7 @@ module "helm_vault" {
 
   chart_version = "0.0.7"
   dependencies = [
-    "${module.namespace_cloudops.depended_on}",
+    "${module.namespace_vault.depended_on}",
   ]
 
   helm_service_account = "tiller"

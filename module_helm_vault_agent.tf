@@ -3,7 +3,7 @@ module "helm_vault_agent" {
 
   chart_version = "0.0.7"
   dependencies = [
-    "${module.namespace_cloudops.depended_on}",
+    "${module.namespace_vault.depended_on}",
   ]
 
   helm_release_name    = "vault-agent"
