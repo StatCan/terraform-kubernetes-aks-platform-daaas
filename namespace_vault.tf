@@ -16,7 +16,7 @@ module "namespace_vault" {
   name = "${kubernetes_namespace.vault.metadata.0.name}"
   namespace_admins = {
     users  = []
-    groups = [ var.kubernetes_rbac_group ]
+    groups = [var.kubernetes_rbac_group]
   }
 
   # ServiceAccount

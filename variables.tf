@@ -160,3 +160,7 @@ variable "vault_aad_client_id" {
 variable "vault_azure_storage_key" {
   description = "The key to Azure Storage Account used for storage"
 }
+
+variable "vault_tenant_id" {
+  description = "The TenantId where resides Vault"
+}

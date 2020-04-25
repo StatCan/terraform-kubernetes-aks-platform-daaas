@@ -69,8 +69,8 @@ vault:
         }
 
         seal "azurekeyvault" {
-          tenant_id = ""
-          vault_name = ""
+          tenant_id = "${var.vault_tenant_id}"
+          vault_name = "k8scc01covid-vault"
           key_name = "vault"
         }
 
