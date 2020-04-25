@@ -54,6 +54,8 @@ jobs:
           TF_VAR_kubernetes_rbac_group: ${{ secrets.TF_VAR_kubernetes_rbac_group }}
           TF_VAR_kubernetes_rbac_pachyderm_group: ${{ secrets.TF_VAR_kubernetes_rbac_pachyderm_group }}
           TF_VAR_prometheus_grafana_password: ${{ secrets.TF_VAR_prometheus_grafana_password }}
+          TF_VAR_vault_aad_client_id: ${{ secrets.TF_VAR_vault_aad_client_id }}
+          TF_VAR_vault_aad_resource_id: ${{ secrets.TF_VAR_vault_aad_resource_id }}
           TF_VAR_vault_azure_storage_key: ${{ secrets.TF_VAR_vault_azure_storage_key }}
           TF_VAR_velero_azure_client_id: ${{ secrets.TF_VAR_velero_azure_client_id }}
           TF_VAR_velero_azure_client_secret: ${{ secrets.TF_VAR_velero_azure_client_secret }}
@@ -93,6 +95,8 @@ jobs:
           TF_VAR_kubernetes_rbac_group: ${{ secrets.TF_VAR_kubernetes_rbac_group }}
           TF_VAR_kubernetes_rbac_pachyderm_group: ${{ secrets.TF_VAR_kubernetes_rbac_pachyderm_group }}
           TF_VAR_prometheus_grafana_password: ${{ secrets.TF_VAR_prometheus_grafana_password }}
+          TF_VAR_vault_aad_client_id: ${{ secrets.TF_VAR_vault_aad_client_id }}
+          TF_VAR_vault_aad_resource_id: ${{ secrets.TF_VAR_vault_aad_resource_id }}
           TF_VAR_vault_azure_storage_key: ${{ secrets.TF_VAR_vault_azure_storage_key }}
           TF_VAR_velero_azure_client_id: ${{ secrets.TF_VAR_velero_azure_client_id }}
           TF_VAR_velero_azure_client_secret: ${{ secrets.TF_VAR_velero_azure_client_secret }}
@@ -132,6 +136,8 @@ jobs:
           TF_VAR_kubernetes_rbac_group: ${{ secrets.TF_VAR_kubernetes_rbac_group }}
           TF_VAR_kubernetes_rbac_pachyderm_group: ${{ secrets.TF_VAR_kubernetes_rbac_pachyderm_group }}
           TF_VAR_prometheus_grafana_password: ${{ secrets.TF_VAR_prometheus_grafana_password }}
+          TF_VAR_vault_aad_client_id: ${{ secrets.TF_VAR_vault_aad_client_id }}
+          TF_VAR_vault_aad_resource_id: ${{ secrets.TF_VAR_vault_aad_resource_id }}
           TF_VAR_vault_azure_storage_key: ${{ secrets.TF_VAR_vault_azure_storage_key }}
           TF_VAR_velero_azure_client_id: ${{ secrets.TF_VAR_velero_azure_client_id }}
           TF_VAR_velero_azure_client_secret: ${{ secrets.TF_VAR_velero_azure_client_secret }}

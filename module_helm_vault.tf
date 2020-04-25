@@ -74,7 +74,6 @@ vault:
           key_name = "vault"
         }
 
-        #TODO Create and update storage account
         storage "azure" {
           accountName = "k8scc01covidvaultdoonr"
           accountKey = "${var.vault_azure_storage_key}"
