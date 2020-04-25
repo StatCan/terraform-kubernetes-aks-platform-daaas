@@ -175,7 +175,7 @@ resource "kubernetes_role_binding" "minio-port-forward" {
   }
 }
 
-#Vault Kubernetets Authentication Role token reviewer binding
+#Vault Kubernetes Authentication Role token reviewer binding
 resource "kubernetes_cluster_role_binding" "vault-token-review" {
   metadata {
     name = "role-tokenreview-binding"
