@@ -55,6 +55,7 @@ resource "kubernetes_deployment" "opa_minio" {
 
           liveness_probe {
             http_get {
+              path   = "/"
               scheme = "HTTP"
               port   = 8181
             }
