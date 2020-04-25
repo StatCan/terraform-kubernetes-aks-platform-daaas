@@ -4,6 +4,7 @@ module "helm_vault_agent" {
   chart_version = "0.0.7"
   dependencies = [
     "${module.namespace_vault.depended_on}",
+    "${null_resource.helm_repo_add.id}",
   ]
 
   helm_release_name    = "vault-agent"
