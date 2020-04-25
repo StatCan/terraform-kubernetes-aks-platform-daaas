@@ -174,3 +174,22 @@ resource "kubernetes_role_binding" "minio-port-forward" {
     }
   }
 }
+
+#Vault Kubernetets Authentication Role token reviewer binding
+resource "kubernetes_cluster_role_binding" "vault-token-review" {
+  metadata {
+    name = "role-tokenreview-binding"
+  }
+
+  role_ref {
+    api_group = "rbac.authorization.k8s.io"
+    kind      = "ClusterRole"
+    name      = "system:auth-delegator"
+  }
+
+  subject {
+    kind      = "ServiceAccount"
+    name      = "vault-auth"
+    namespace = "vault"
+  }
+}
