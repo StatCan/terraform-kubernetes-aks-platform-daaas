@@ -148,3 +148,19 @@ variable "databricks_host" {
 variable "databricks_token" {
   description = "The databricks token value"
 }
+
+variable "vault_aad_resource_id" {
+  description = "Vault AAD Resource ID"
+}
+
+variable "vault_aad_client_id" {
+  description = "Vault AAD Client ID"
+}
+
+variable "vault_azure_storage_key" {
+  description = "The key to Azure Storage Account used for storage"
+}
+
+variable "vault_tenant_id" {
+  description = "The TenantId where resides Vault"
+}
