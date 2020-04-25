@@ -17,7 +17,7 @@ vault:
     enabled: true
     image:
       repository: "hashicorp/vault-k8s"
-      tag: "0.1.2-4"
+      tag: "0.3.0"
 
   server:
     standalone:
