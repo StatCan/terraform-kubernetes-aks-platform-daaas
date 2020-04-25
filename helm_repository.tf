@@ -15,6 +15,11 @@ data "helm_repository" "statcan" {
   url  = "https://statcan.github.io/charts"
 }
 
+data "helm_repository" "aad_pod_identity" {
+  name = "aad-pod-identity"
+  url  = "https://raw.githubusercontent.com/Azure/aad-pod-identity/master/charts"
+}
+
 resource "null_resource" "helm_repo_add" {
   triggers = {
     run_everytime = "${timestamp()}"
@@ -34,5 +39,9 @@ resource "null_resource" "helm_repo_add" {
 
   provisioner "local-exec" {
     command = "helm repo add statcan https://statcan.github.io/charts"
+  }
+
+  provisioner "local-exec" {
+    command = "helm repo add aad-pod-identity https://raw.githubusercontent.com/Azure/aad-pod-identity/master/charts"
   }
 }
