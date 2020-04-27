@@ -12,10 +12,11 @@ rl_permissions := {
               {"action": "s3:GetBucketObjectLockConfiguration"},
               {"action": "s3:ListBucket"},
               {"action": "s3:PutObject"}],
-    "scratch": [{"action": "s3:ListAllMyBuckets"},
-                {"action": "s3:GetObject"},
-                {"action": "s3:ListBucket" }],
+    "shared": [{"action": "s3:ListAllMyBuckets"},
+               {"action": "s3:GetObject"},
+               {"action": "s3:ListBucket" }],
     "admin": [{"action": "admin:ServerTrace"},
+              {"action": "s3:CreateBucket"},
               {"action": "s3:DeleteBucket"},
               {"action": "s3:DeleteBucket"},
               {"action": "s3:DeleteObject"},
@@ -45,7 +46,7 @@ allow {
 allow {
   username := split(lower(input.claims.preferred_username),"@")[0]
   ref := input.conditions.Referer[_]
-  url := concat("/", ["^http://.*:9000/minio/scratch",username,".*$"] )
+  url := concat("/", ["^http://.*:9000/minio/shared",username,".*$"] )
   re_match( url , ref)
   # input.claims.organisation_name == "daaas"
   permissions := rl_permissions["user"]
@@ -54,8 +55,8 @@ allow {
 }
 
 allow {
-  input.bucket == "scratch"
-  permissions := rl_permissions["scratch"]
+  input.bucket == "shared"
+  permissions := rl_permissions["shared"]
   p := permissions[_]
   p == {"action": input.action}
 }
