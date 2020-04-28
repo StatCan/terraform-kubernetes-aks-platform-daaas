@@ -92,3 +92,15 @@ destinationRule:
   enabled: false
 EOF
 }
+
+# resource "null_resource" "vault_patches" {
+#   triggers = {
+#     revision = "${module.helm_vault.release_revision}"
+#   }
+#   provisioner "local-exec" {
+#     command = "kubectl -n cloudops patch statefulset vault --type=json -p='[{\"op\": \"replace\", \"path\": \"/spec/template/spec/containers/0/env/3/value\", \"value\": \"http://vault.vault.svc.cluster.local:8200\"}]'"
+#   }
+#   depends_on = [
+#     "module.vault_patches"
+#   ]
+# }
