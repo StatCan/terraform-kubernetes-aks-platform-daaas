@@ -42,15 +42,11 @@ EOF
 #   }
 
 #   provisioner "local-exec" {
-#     command = "kubectl -n cloudops patch deployment vault-agent-agent-injector --type=json -p='[{\"op\": \"replace\", \"path\": \"/spec/template/spec/containers/0/env/2/value\", \"value\": \"https://vault.cloud.statcan.ca\"}]'"
+#     command = "kubectl -n cloudops patch deployment vault-agent-agent-injector --type=json -p='[{\"op\": \"replace\", \"path\": \"/spec/template/spec/containers/0/env/2/value\", \"value\": \"https://vault.example.ca\"}]'"
 #   }
 
 #   provisioner "local-exec" {
-#     command = "kubectl -n cloudops patch deployment vault-agent-agent-injector --type=json -p='[{\"op\": \"add\", \"path\": \"/spec/template/spec/containers/0/env/6\", \"value\": { \"name\": \"AGENT_INJECT_VAULT_AUTH_PATH\", \"value\": \"auth/k8s-cancentral-01-management\"}}]'"
-#   }
-
-#   provisioner "local-exec" {
-#     command = "kubectl -n cloudops patch deployment vault-agent-agent-injector --type=json -p='[{\"op\": \"replace\", \"path\": \"/spec/template/spec/imagePullSecrets\", \"value\": [{ \"name\": \"artifactory-prod\" }]}]'"
+#     command = "kubectl -n cloudops patch deployment vault-agent-agent-injector --type=json -p='[{\"op\": \"add\", \"path\": \"/spec/template/spec/containers/0/env/6\", \"value\": { \"name\": \"AGENT_INJECT_VAULT_AUTH_PATH\", \"value\": \"auth/k8s-cancentral-01-covid-aks\"}}]'"
 #   }
 
 #   depends_on = [
