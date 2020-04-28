@@ -4,6 +4,9 @@ import input
 default allow = false
 
 rl_permissions := {
+    "reader": [{"action": "s3:ListBucket"},
+              {"action": "s3:GetObject"},
+              {"action": "s3:ListAllMyBuckets"}],
     "user": [{"action": "s3:CreateBucket"},
               {"action": "s3:DeleteBucket"},
               {"action": "s3:DeleteObject"},
@@ -24,6 +27,18 @@ rl_permissions := {
               {"action": "s3:ListAllMyBuckets"},
               {"action": "s3:ListBucket"},
               {"action": "s3:PutObject"}],
+}
+
+allow {
+  root = ["minimal-tenant1", "pachyderm-tenant1", "premium-tenant1"]
+  input.account == root[_]
+}
+
+allow {
+  startswith(input.account, "read-all-")
+  permissions := rl_permissions["reader"]
+  p := permissions[_]
+  p == {"action": input.action}
 }
 
 allow {
