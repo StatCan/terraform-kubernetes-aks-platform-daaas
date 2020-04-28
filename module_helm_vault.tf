@@ -68,6 +68,8 @@ vault:
       config: |
         ui = true
 
+        plugin_directory = "/plugins"
+
         listener "tcp" {
           tls_disable = 1
           address = "[::]:8200"
