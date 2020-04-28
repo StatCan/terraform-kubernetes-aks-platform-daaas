@@ -34,11 +34,16 @@ module "helm_vault" {
 
   values = <<EOF
 vault:
+  global:
+    imagePullSecrets:
+      - name: k8scc01covidacr-registry-connection
+
   injector:
     enabled: false
 
   server:
     image:
+      repository: k8scc01covidacr.azurecr.io/vault
       tag: 1.4.0
 
     authDelegator:
