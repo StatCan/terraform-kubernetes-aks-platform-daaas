@@ -40,6 +40,11 @@ jobs:
           TF_VAR_cert_manager_letsencrypt_email: ${{ secrets.TF_VAR_cert_manager_letsencrypt_email }}
           TF_VAR_databricks_host: ${{ secrets.TF_VAR_databricks_host }}
           TF_VAR_databricks_token: ${{ secrets.TF_VAR_databricks_token }}
+          TF_VAR_docker_repo: ${{ secrets.TF_VAR_docker_repo }}
+          TF_VAR_docker_username: ${{ secrets.TF_VAR_docker_username }}
+          TF_VAR_docker_password: ${{ secrets.TF_VAR_docker_password }}
+          TF_VAR_docker_email: ${{ secrets.TF_VAR_docker_email }}
+          TF_VAR_docker_auth: ${{ secrets.TF_VAR_docker_auth }}
           TF_VAR_enable_kubernetes_secret: ${{ secrets.TF_VAR_enable_kubernetes_secret }}
           TF_VAR_groups_daaas: ${{ secrets.TF_VAR_groups_daaas }}
           TF_VAR_groups_esd: ${{ secrets.TF_VAR_groups_esd }}
@@ -48,6 +53,7 @@ jobs:
           TF_VAR_kubernetes_rbac_daaas_group: ${{ secrets.TF_VAR_kubernetes_rbac_daaas_group }}
           TF_VAR_kubernetes_rbac_group: ${{ secrets.TF_VAR_kubernetes_rbac_group }}
           TF_VAR_kubernetes_rbac_pachyderm_group: ${{ secrets.TF_VAR_kubernetes_rbac_pachyderm_group }}
+          TF_VAR_kubernetes_secret: ${{ secrets.TF_VAR_kubernetes_secret }}
           TF_VAR_prometheus_grafana_password: ${{ secrets.TF_VAR_prometheus_grafana_password }}
           TF_VAR_vault_aad_client_id: ${{ secrets.TF_VAR_vault_aad_client_id }}
           TF_VAR_vault_aad_resource_id: ${{ secrets.TF_VAR_vault_aad_resource_id }}
@@ -82,6 +88,11 @@ jobs:
           TF_VAR_cert_manager_letsencrypt_email: ${{ secrets.TF_VAR_cert_manager_letsencrypt_email }}
           TF_VAR_databricks_host: ${{ secrets.TF_VAR_databricks_host }}
           TF_VAR_databricks_token: ${{ secrets.TF_VAR_databricks_token }}
+          TF_VAR_docker_repo: ${{ secrets.TF_VAR_docker_repo }}
+          TF_VAR_docker_username: ${{ secrets.TF_VAR_docker_username }}
+          TF_VAR_docker_password: ${{ secrets.TF_VAR_docker_password }}
+          TF_VAR_docker_email: ${{ secrets.TF_VAR_docker_email }}
+          TF_VAR_docker_auth: ${{ secrets.TF_VAR_docker_auth }}
           TF_VAR_enable_kubernetes_secret: ${{ secrets.TF_VAR_enable_kubernetes_secret }}
           TF_VAR_groups_daaas: ${{ secrets.TF_VAR_groups_daaas }}
           TF_VAR_groups_esd: ${{ secrets.TF_VAR_groups_esd }}
@@ -90,6 +101,7 @@ jobs:
           TF_VAR_kubernetes_rbac_daaas_group: ${{ secrets.TF_VAR_kubernetes_rbac_daaas_group }}
           TF_VAR_kubernetes_rbac_group: ${{ secrets.TF_VAR_kubernetes_rbac_group }}
           TF_VAR_kubernetes_rbac_pachyderm_group: ${{ secrets.TF_VAR_kubernetes_rbac_pachyderm_group }}
+          TF_VAR_kubernetes_secret: ${{ secrets.TF_VAR_kubernetes_secret }}
           TF_VAR_prometheus_grafana_password: ${{ secrets.TF_VAR_prometheus_grafana_password }}
           TF_VAR_vault_aad_client_id: ${{ secrets.TF_VAR_vault_aad_client_id }}
           TF_VAR_vault_aad_resource_id: ${{ secrets.TF_VAR_vault_aad_resource_id }}
@@ -125,6 +137,11 @@ jobs:
           TF_VAR_cert_manager_letsencrypt_email: ${{ secrets.TF_VAR_cert_manager_letsencrypt_email }}
           TF_VAR_databricks_host: ${{ secrets.TF_VAR_databricks_host }}
           TF_VAR_databricks_token: ${{ secrets.TF_VAR_databricks_token }}
+          TF_VAR_docker_repo: ${{ secrets.TF_VAR_docker_repo }}
+          TF_VAR_docker_username: ${{ secrets.TF_VAR_docker_username }}
+          TF_VAR_docker_password: ${{ secrets.TF_VAR_docker_password }}
+          TF_VAR_docker_email: ${{ secrets.TF_VAR_docker_email }}
+          TF_VAR_docker_auth: ${{ secrets.TF_VAR_docker_auth }}
           TF_VAR_enable_kubernetes_secret: ${{ secrets.TF_VAR_enable_kubernetes_secret }}
           TF_VAR_groups_daaas: ${{ secrets.TF_VAR_groups_daaas }}
           TF_VAR_groups_esd: ${{ secrets.TF_VAR_groups_esd }}
@@ -133,10 +150,11 @@ jobs:
           TF_VAR_kubernetes_rbac_daaas_group: ${{ secrets.TF_VAR_kubernetes_rbac_daaas_group }}
           TF_VAR_kubernetes_rbac_group: ${{ secrets.TF_VAR_kubernetes_rbac_group }}
           TF_VAR_kubernetes_rbac_pachyderm_group: ${{ secrets.TF_VAR_kubernetes_rbac_pachyderm_group }}
+          TF_VAR_kubernetes_secret: ${{ secrets.TF_VAR_kubernetes_secret }}
           TF_VAR_prometheus_grafana_password: ${{ secrets.TF_VAR_prometheus_grafana_password }}
-          TF_VAR_vault_azure_storage_key: ${{ secrets.TF_VAR_vault_azure_storage_key }}
           TF_VAR_vault_aad_client_id: ${{ secrets.TF_VAR_vault_aad_client_id }}
           TF_VAR_vault_aad_resource_id: ${{ secrets.TF_VAR_vault_aad_resource_id }}
+          TF_VAR_vault_azure_storage_key: ${{ secrets.TF_VAR_vault_azure_storage_key }}
           TF_VAR_vault_tenant_id: ${{ secrets.ARM_TENANT_ID }}
           TF_VAR_velero_azure_client_id: ${{ secrets.TF_VAR_velero_azure_client_id }}
           TF_VAR_velero_azure_client_secret: ${{ secrets.TF_VAR_velero_azure_client_secret }}
