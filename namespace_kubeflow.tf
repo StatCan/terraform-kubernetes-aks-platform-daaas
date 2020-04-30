@@ -3,12 +3,13 @@
 resource "kubernetes_namespace" "kubeflow" {
   metadata {
     name = "kubeflow"
+
+    labels = {
+      control-plane                      = "kubeflow"
+      "katib-metricscollector-injection" = "enabled"
+    }
   }
 
-  labels = {
-    control-plane                      = "kubeflow"
-    "katib-metricscollector-injection" = "enabled"
-  }
 }
 
 module "namespace_kubeflow" {
