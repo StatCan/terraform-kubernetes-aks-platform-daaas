@@ -154,7 +154,7 @@ resource "kubernetes_cluster_role_binding" "kubecost-cluster-admin" {
 resource "kubernetes_role" "minio-port-forward" {
   metadata {
     name      = "minio-port-forward"
-    namespace = "kubeflow"
+    namespace = "${kubernetes_namespace.kubeflow.metadata.0.name}"
   }
 
   rule {
@@ -173,7 +173,7 @@ resource "kubernetes_role" "minio-port-forward" {
 resource "kubernetes_role_binding" "minio-port-forward" {
   metadata {
     name      = "minio-port-forward"
-    namespace = "kubeflow"
+    namespace = "${kubernetes_namespace.kubeflow.metadata.0.name}"
   }
 
   role_ref {
