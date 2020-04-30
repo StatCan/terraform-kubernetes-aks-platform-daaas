@@ -151,16 +151,20 @@ variable "databricks_token" {
 
 variable "vault_aad_resource_id" {
   description = "Vault AAD Resource ID"
+  default = ""
 }
 
 variable "vault_aad_client_id" {
   description = "Vault AAD Client ID"
+  default = ""
 }
 
 variable "vault_azure_storage_key" {
   description = "The key to Azure Storage Account used for storage"
+  default = ""
 }
 
 variable "vault_tenant_id" {
   description = "The TenantId where resides Vault"
+  default = ""
 }
