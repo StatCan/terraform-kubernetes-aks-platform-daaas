@@ -28,6 +28,14 @@ velero:
     digest: sha256:0c74f1d552ef25a4227e582f4c0e6b3db3402abe196595ee9442ceeb43b99696
     pullPolicy: IfNotPresent
 
+  initContainers:
+    - name: velero-plugin-for-aws
+      image: velero/velero-plugin-for-microsoft-azure:v1.0.1
+      imagePullPolicy: IfNotPresent
+      volumeMounts:
+        - mountPath: /target
+          name: plugins
+
   configuration:
     # Cloud provider being used (e.g. aws, azure, gcp).
     provider: azure
