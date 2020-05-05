@@ -192,3 +192,33 @@ resource "kubernetes_role_binding" "minio-port-forward" {
     }
   }
 }
+
+resource "kubernetes_role_binding" "pipelines_databricks" {
+  metadata {
+    name      = "pipelines-databricks"
+    namespace = "kubeflow"
+  }
+  role_ref {
+    api_group = "rbac.authorization.k8s.io"
+    kind      = "Role"
+    name      = "pipelines-databricks"
+  }
+  subject {
+    api_group = "rbac.authorization.k8s.io"
+    kind      = "ServiceAccount"
+    name      = "pipeline-runner"
+    namespace = "kubeflow"
+  }
+}
+
+resource "kubernetes_role" "pipelines_databricks" {
+  metadata {
+    name      = "pipeliens-databricks"
+    namespace = "kubeflow"
+  }
+  rule {
+    api_groups = ["databricks.microsoft.com"]
+    resources  = ["*"]
+    verbs      = ["*"]
+  }
+}
