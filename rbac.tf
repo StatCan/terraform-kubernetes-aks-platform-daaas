@@ -199,7 +199,6 @@ resource "kubernetes_role_binding" "pipelines_databricks" {
     namespace = "kubeflow"
   }
   role_ref {
-    api_group = ""
     kind      = "Role"
     name      = "pipelines-databricks"
   }
