@@ -199,7 +199,7 @@ resource "kubernetes_role_binding" "pipelines_databricks" {
     namespace = "kubeflow"
   }
   role_ref {
-    api_group = "rbac.authorization.k8s.io"
+    api_group = ""
     kind      = "Role"
     name      = "pipelines-databricks"
   }
@@ -213,7 +213,7 @@ resource "kubernetes_role_binding" "pipelines_databricks" {
 
 resource "kubernetes_role" "pipelines_databricks" {
   metadata {
-    name      = "pipeliens-databricks"
+    name      = "pipelines-databricks"
     namespace = "kubeflow"
   }
   rule {
