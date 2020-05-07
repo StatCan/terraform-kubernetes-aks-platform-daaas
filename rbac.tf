@@ -80,6 +80,11 @@ resource "kubernetes_role" "pachyderm-users" {
     resources  = ["pods"]
     verbs      = ["get", "list", "watch"]
   }
+  rule {
+    api_groups = [""]
+    resources  = ["pods/portforward"]
+    verbs      = ["get", "create"]
+  }
 }
 
 
