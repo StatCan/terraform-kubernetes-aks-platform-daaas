@@ -5,7 +5,6 @@ resource "kubernetes_namespace" "kubeflow" {
     name = "kubeflow"
 
     labels = {
-      control-plane                      = "kubeflow"
       "katib-metricscollector-injection" = "enabled"
     }
   }
