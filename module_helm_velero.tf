@@ -43,14 +43,14 @@ velero:
     # Parameters for the `default` BackupStorageLocation. See
     # https://velero.io/docs/v1.0.0/api-types/backupstoragelocation/
     backupStorageLocation:
-      name: azure
+      name: default
 
     # Parameters for the `default` VolumeSnapshotLocation. See
     # https://velero.io/docs/v1.0.0/api-types/volumesnapshotlocation/
     volumeSnapshotLocation:
       # Cloud provider where volume snapshots are being taken. Usually
       # should match `configuration.provider`. Required.,
-      name: azure
+      name: default
       config:
        resourceGroup: k8s-cancentral-01-covid-velero
 
