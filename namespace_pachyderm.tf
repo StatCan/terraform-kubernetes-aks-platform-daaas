@@ -22,8 +22,8 @@ module "namespace_pachyderm" {
   helm_service_account = "tiller"
 
   # ServiceQuota Overrides
-  allowed_loadbalancers = "0"
-  allowed_nodeports     = "0"
+  allowed_loadbalancers = "2"
+  allowed_nodeports     = "2"
 
   # CICD
   ci_name = "deploy"
